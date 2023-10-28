@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+#Se dispara la acción cada vez que se haga un push o un pull request a "main"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+#Trabajos que vamos a hacer
+jobs:
+
+  build:
+
+    #Trabajamos sobre Ubuntu ya que trae ciertas configuaciones como el Docker Daemon
+    #que nos permite ejecutar comandos de Docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
